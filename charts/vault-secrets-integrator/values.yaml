@@ -14,12 +14,12 @@ fullnameOverride: ""
 
 vault:
   engine:
-    annotations:
-    - name: app1
-      path: app1/kv/secret
-    - name: app2
-      path: app2/kv/secret
-    role: "default"
+    annotations: []
+    # - name: app1
+    #   path: app1/kv/secret
+    # - name: app2
+    #   path: app2/kv/secret
+    role: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
