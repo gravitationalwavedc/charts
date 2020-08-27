@@ -7,6 +7,7 @@ metadata:
 annotations:
     vault.hashicorp.com/agent-inject: "true"
     vault.hashicorp.com/agent-init-first: "true"
+    {{- template "vault.engine.annotations" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

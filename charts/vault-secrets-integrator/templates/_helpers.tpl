@@ -61,3 +61,55 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+# Vault engine annotations
+{{- define "vault.engine.annotations" -}}
+  {{- if .Values.vault.engine.annotations }}
+    {{- range .Values.vault.engine.annotations }}
+    vault.hashicorp.com/agent-inject-secret-{{ .name }}.json: "{{ .path }}"
+    vault.hashicorp.com/agent-inject-template-{{ .name }}.json: |-
+      {{ "{{- with secret" }} "{{ .path }}" {{ "-}}" }}
+      {{ "{" }}
+      {{ "  \"apiVersion\": \"v1\"," }}
+      {{ "  \"kind\": \"Secret\"," }}
+      {{ "  \"metadata\": {" }}
+      {{ "    \"name\": \"" }}{{ .name }}{{ "\"," }}
+      {{ "  }," }}
+      {{ "  \"type\": \"Opaque\"," }}
+      {{ "  \"stringData\": {" }}
+      {{ "  {{ range $k, $v := .Data.data }}" }}
+      {{ "  \"{{ $k }}\": \"{{ $v }}\"," }}
+      {{ "  {{ end }}" }}
+      {{ "  \"end\": \"NULL\"" }}
+      {{ "}" }}
+      {{ "{{- end }}" }}
+    {{- end }}
+    {{ "vault.hashicorp.com/role:" }} {{ .Values.vault.engine.role }}
+  {{- end }}
+{{- end -}}
+
+# Docker private repository
+{{- define "docker.registry.annotations" -}}
+  {{- if .Values.docker.registry.annotations }}
+    {{- range .Values.docker.registry.annotations }}
+    vault.hashicorp.com/agent-inject-secret-{{ .name }}.json: "{{ .path }}"
+    vault.hashicorp.com/agent-inject-template-{{ .name }}.json: |-
+      {{ "{{- with secret" }} "{{ .path }}" {{ "-}}" }}
+      {{ "{" }}
+      {{ "  \"apiVersion\": \"v1\"," }}
+      {{ "  \"kind\": \"Secret\"," }}
+      {{ "  \"metadata\": {" }}
+      {{ "    \"name\": \"" }}{{ .name }}{{ "\"," }}
+      {{ "  }," }}
+      {{ "  \"type\": \"Opaque\"," }}
+      {{ "  \"stringData\": {" }}
+      {{ "  {{ range $k, $v := .Data.data }}" }}
+      {{ "  \"{{ $k }}\": \"{{ $v }}\"," }}
+      {{ "  {{ end }}" }}
+      {{ "  \"end\": \"NULL\"" }}
+      {{ "}" }}
+      {{ "{{- end }}" }}
+    {{- end }}
+    {{ "vault.hashicorp.com/role:" }} {{ .Values.vault.engine.role }}
+  {{- end }}
+{{- end -}}

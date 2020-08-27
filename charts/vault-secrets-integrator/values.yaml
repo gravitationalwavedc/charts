@@ -12,6 +12,15 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+vault:
+  engine:
+    annotations:
+    - name: app1
+      path: app1/kv/secret
+    - name: app2
+      path: app2/kv/secret
+    role: "default"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
