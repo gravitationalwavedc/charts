@@ -1,0 +1,6 @@
+1. Customise the external nfs details through the following present in values.yaml:
+nfsConfig:
+  PROVISIONER_NAME: ""
+  NFS_SERVER: 0.0.0.0
+  NFS_PATH: /mnt/nfs/
+

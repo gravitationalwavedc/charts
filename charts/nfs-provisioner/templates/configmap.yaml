@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  PROVISIONER_NAME: {{ .Values.nfsConfig.PROVISIONER_NAME | default "nfs-provisioner.fullname" . | quote }}
+  NFS_SERVER: {{ .Values.nfsConfig.NFS_SERVER }}
+  NFS_PATH: {{ .Values.nfsConfig.NFS_PATH }}
