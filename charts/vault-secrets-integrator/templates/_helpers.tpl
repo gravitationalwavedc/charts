@@ -62,54 +62,51 @@ Create the name of the service account to use
 {{- end -}}
 {{- end -}}
 
-# Vault engine annotations
-{{- define "vault.engine.annotations" -}}
-  {{- if .Values.vault.engine.annotations }}
-    {{- range .Values.vault.engine.annotations }}
-    vault.hashicorp.com/agent-inject-secret-{{ .name }}.json: "{{ .path }}"
-    vault.hashicorp.com/agent-inject-template-{{ .name }}.json: |-
-      {{ "{{- with secret" }} "{{ .path }}" {{ "-}}" }}
-      {{ "{" }}
-      {{ "  \"apiVersion\": \"v1\"," }}
-      {{ "  \"kind\": \"Secret\"," }}
-      {{ "  \"metadata\": {" }}
-      {{ "    \"name\": \"" }}{{ .name }}{{ "\"," }}
-      {{ "  }," }}
-      {{ "  \"type\": \"Opaque\"," }}
-      {{ "  \"stringData\": {" }}
-      {{ "  {{ range $k, $v := .Data.data }}" }}
-      {{ "  \"{{ $k }}\": \"{{ $v }}\"," }}
-      {{ "  {{ end }}" }}
-      {{ "  \"end\": \"NULL\"" }}
-      {{ "}" }}
-      {{ "{{- end }}" }}
+# Vault annotations: secrets
+{{- define "vault.annotations.secrets" -}}
+  {{- if .Values.vault.annotations.secrets }}
+    {{- range .Values.vault.annotations.secrets }}
+            vault.hashicorp.com/agent-inject-secret-{{ .name }}.json: "{{ .path }}"
+            vault.hashicorp.com/agent-inject-template-{{ .name }}.json: |-
+              {{ "{{- with secret" }} "{{ .path }}" {{ "-}}" }}
+              {{ "{" }}
+              {{ "  \"apiVersion\": \"v1\"," }}
+              {{ "  \"kind\": \"Secret\"," }}
+              {{ "  \"metadata\": {" }}
+              {{ "    \"name\": \"" }}{{ .name }}{{ "\"," }}
+              {{ "  }," }}
+              {{ "  \"type\": \"Opaque\"," }}
+              {{ "  \"stringData\": {" }}
+              {{ "  {{ range $k, $v := .Data.data }}" }}
+              {{ "  \"{{ $k }}\": \"{{ $v }}\"," }}
+              {{ "  {{ end }}" }}
+              {{ "  \"end\": \"NULL\"" }}
+              {{ "  }" }}
+              {{ "}" }}
+              {{ "{{- end }}" }}
     {{- end }}
-    {{ "vault.hashicorp.com/role:" }} {{ .Values.vault.engine.role }}
   {{- end }}
 {{- end -}}
 
-# Docker private repository
-{{- define "docker.registry.annotations" -}}
-  {{- if .Values.docker.registry.annotations }}
-    {{- range .Values.docker.registry.annotations }}
-    vault.hashicorp.com/agent-inject-secret-{{ .name }}.json: "{{ .path }}"
-    vault.hashicorp.com/agent-inject-template-{{ .name }}.json: |-
-      {{ "{{- with secret" }} "{{ .path }}" {{ "-}}" }}
-      {{ "{" }}
-      {{ "  \"apiVersion\": \"v1\"," }}
-      {{ "  \"kind\": \"Secret\"," }}
-      {{ "  \"metadata\": {" }}
-      {{ "    \"name\": \"" }}{{ .name }}{{ "\"," }}
-      {{ "  }," }}
-      {{ "  \"type\": \"Opaque\"," }}
-      {{ "  \"stringData\": {" }}
-      {{ "  {{ range $k, $v := .Data.data }}" }}
-      {{ "  \"{{ $k }}\": \"{{ $v }}\"," }}
-      {{ "  {{ end }}" }}
-      {{ "  \"end\": \"NULL\"" }}
-      {{ "}" }}
-      {{ "{{- end }}" }}
+# Vault annotations: dockerconfigjson
+{{- define "vault.annotations.dockerregistrycred" -}}
+  {{- if .Values.vault.annotations.dockerregistrycred }}
+    {{- range .Values.vault.annotations.dockerregistrycred }}
+            vault.hashicorp.com/agent-inject-secret-{{ .name }}.json: "{{ .path }}"
+            vault.hashicorp.com/agent-inject-template-{{ .name }}.json: |-
+              {{ "{{- with secret" }} "{{ .path }}" {{ "-}}" }}
+              {{ "{" }}
+              {{ "  \"apiVersion\": \"v1\"," }}
+              {{ "  \"kind\": \"Secret\"," }}
+              {{ "  \"metadata\": {" }}
+              {{ "    \"name\": \"" }}{{ .name }}{{ "\"," }}
+              {{ "  }," }}
+              {{ "  \"type\": \"kubernetes.io/dockerconfigjson\"," }}
+              {{ "  \"data\": {" }}
+              {{ "  \".dockerconfigjson\": {{ .Data.data.dockerconfigjson }}" }}
+              {{ "  }" }}
+              {{ "}" }}
+              {{ "{{- end }}" }}
     {{- end }}
-    {{ "vault.hashicorp.com/role:" }} {{ .Values.vault.engine.role }}
   {{- end }}
 {{- end -}}

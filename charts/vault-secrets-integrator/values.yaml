@@ -17,13 +17,18 @@ cronjob:
   schedule: "* * * * *"
 
 vault:
-  engine:
-    annotations: []
+  annotations:
+    secrets: []
     # - name: app1
-    #   path: app1/kv/secret
+    #   path: path/to/app1/secret
     # - name: app2
-    #   path: app2/kv/secret
+    #   path: path/to/app2/secret
+    dockerregistrycred: []
+    # - name: regcred1
+    #   path: path/to/regcred1
     role: ""
+
+
 
 serviceAccount:
   # Specifies whether a service account should be created

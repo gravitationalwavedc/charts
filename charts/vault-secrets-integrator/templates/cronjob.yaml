@@ -18,7 +18,9 @@ spec:
           annotations:
             vault.hashicorp.com/agent-inject: "true"
             vault.hashicorp.com/agent-init-first: "true"
-            {{- template "vault.engine.annotations" . }}
+            {{- template "vault.annotations.secrets" . }}
+            {{- template "vault.annotations.dockerregistrycred" . }}
+            vault.hashicorp.com/role: {{ .Values.vault.annotations.role }}
         spec:
         {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
