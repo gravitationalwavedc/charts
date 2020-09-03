@@ -1,6 +1,6 @@
 apiVersion: v2
 name: nfs-provisioner
-description: A Helm chart for Kubernetes
+description: Enables nfs dynamic provisioning through storageclasses
 
 # A chart can be either an 'application' or a 'library' chart.
 #
