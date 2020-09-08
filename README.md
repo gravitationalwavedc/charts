@@ -4,7 +4,7 @@ Helm Chart repository for gwcloud applications
 # SETUP
 ```bash
 # Add helm chart repository
-$ helm repo add gwcloud https://nexus.gw-cloud.org/repository/helm/ 
+$ helm repo add gwcloud https://nexus.gw-cloud.org/repository/helm/
 
 # Validation
 $ helm search repo gwcloud
