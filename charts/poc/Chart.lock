@@ -1,0 +1,6 @@
+dependencies:
+- name: vault-secrets-integrator
+  repository: https://nexus.gw-cloud.org/repository/helm/
+  version: 0.1.0
+digest: sha256:ccf0d201e614ebbfe006673b6886bd62f42e5fef9930418b5def80ef0e02ef1b
+generated: "2020-09-16T13:05:06.497405+10:00"
