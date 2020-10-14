@@ -21,6 +21,7 @@ pipeline {
     string(name: 'HELMCHART_PATH', defaultValue: 'charts/*', description: '(Optional)Helm Chart repository location')
     string(name: 'HELM_REPOSITORY', defaultValue: 'https://nexus.gwdc.org.au/repository/helm/', description: '(Optional)Helm Artifact repository')
     string(name: 'OUT_PATH', defaultValue: '.tmp', description: '(Optional)Archive Path')
+    string(name: 'HELM_REPOSITORY_CREDENTIAL', defaultValue: credentials('svc-helm-deployer'), description: '(Optional)Helm Artifact Repo Credentials')
   }
 
   stages {
@@ -54,11 +55,11 @@ pipeline {
     }
     stage('Uploading Image') {
       steps{
-        withCredentials([usernameColonPassword(credentialsId: "$repositoryCredential", variable: 'USERPASS')]) {
+        withCredentials([usernameColonPassword(credentialsId: "$HELM_REPOSITORY_CREDENTIAL", variable: 'USERPASS')]) {
             sh '''
             export CHART_ARCHIVE=$(find $OUT_PATH | grep tgz$)
             set +x
-            for TGZ in $OUT_PATH; do (echo "====" && curl -u $USERPASS $repository --upload-file $TGZ); done
+            for TGZ in $OUT_PATH; do (echo "====" && curl -u $USERPASS $HELM_REPOSITORY --upload-file $TGZ); done
             '''
         }
       }
