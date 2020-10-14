@@ -1,7 +1,7 @@
 pipeline {
 
   agent {
-    node { label 'TEST' }
+    node { label 'mgt_slave' }
   }
 
   options {
