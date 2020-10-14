@@ -22,7 +22,7 @@ pipeline {
     string(name: 'HELMCHART_PATH', defaultValue: 'charts', description: '(Optional)Pass a release version to build a release')
   }
 
-stages {
+  stages {
     stage('Code lint') {
       steps {
         sh "helm lint $HELMCHART_PATH/*"
@@ -82,4 +82,5 @@ stages {
         '''
       }
     }
+  }
 }
