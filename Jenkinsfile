@@ -21,8 +21,9 @@ pipeline {
     string(name: 'HELMCHART_PATH', defaultValue: 'charts/*', description: '(Optional)Helm Chart repository location')
     string(name: 'HELM_REPOSITORY', defaultValue: 'https://nexus.gwdc.org.au/repository/helm/', description: '(Optional)Helm Artifact repository')
     string(name: 'OUT_PATH', defaultValue: '.tmp', description: '(Optional)Archive Path')
-    string(name: 'HELM_REPOSITORY_CREDENTIAL', defaultValue: credentials('svc-helm-deployer'), description: '(Optional)Helm Artifact Repo Credentials')
+    // string(name: 'HELM_REPOSITORY_CREDENTIAL', defaultValue: "", description: '(Optional)Helm Artifact Repo Credentials')
   }
+  
 
   stages {
     stage('Code lint') {
