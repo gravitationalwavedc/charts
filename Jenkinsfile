@@ -26,7 +26,7 @@ pipeline {
   stages {
     stage('Code lint') {
       steps {
-        sh "helm lint $HELMCHART_PATH/*"
+        sh "helm lint $HELMCHART_PATH"
       }
     }
     stage('Helm Chart Dependency Validation') {
