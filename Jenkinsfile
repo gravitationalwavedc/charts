@@ -19,6 +19,7 @@ pipeline {
     string(name: 'SKIP_TESTS', defaultValue: '', description: '(Optional) Skip Tests if not-empty')
     string(name: 'DO_RELEASE', defaultValue: '', description: '(Optional)Pass a release version to build a release')
     string(name: 'HELMCHART_PATH', defaultValue: 'charts/*', description: '(Optional)Helm Chart repository location')
+    string(name: 'HELM_REPOSITORY', defaultValue: 'https://nexus.gwdc.org.au/repository/helm/', description: '(Optional)Helm Artifact repository')
     string(name: 'OUT_PATH', defaultValue: '.tmp', description: '(Optional)Archive Path')
   }
 
