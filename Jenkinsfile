@@ -34,7 +34,7 @@ pipeline {
         script {
           sh '''
           # Temporary Repo
-          helm repo add gwcloud $repository
+          helm repo add gwcloud $HELM_REPOSITORY
           
           # List the dependencies for the given chart
           for dir in $HELMCHART_PATH; do (echo "====" && helm dependency list "$dir"); done
