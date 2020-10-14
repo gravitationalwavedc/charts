@@ -66,7 +66,7 @@ stages {
       steps{
         script {
             sh '''
-            for TGZ in .tmp ; do ls $TGZ | helm search repo gwcloud/$(sed 's/\.tgz//') ; done
+            for TGZ in .tmp ; do ls $TGZ | helm search repo gwcloud/$(sed 's/\\.tgz//') ; done
             '''
         }
       }
