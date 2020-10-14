@@ -23,7 +23,7 @@ pipeline {
     string(name: 'OUT_PATH', defaultValue: '.tmp', description: '(Optional)Archive Path')
     // string(name: 'HELM_REPOSITORY_CREDENTIAL', defaultValue: "", description: '(Optional)Helm Artifact Repo Credentials')
   }
-  
+
 
   stages {
     stage('Code lint') {
@@ -58,7 +58,6 @@ pipeline {
       steps{
         withCredentials([usernameColonPassword(credentialsId: "$HELM_REPOSITORY_CREDENTIAL", variable: 'USERPASS')]) {
             sh '''
-            export CHART_ARCHIVE=$(find $OUT_PATH | grep tgz$)
             set +x
             for TGZ in $OUT_PATH; do (echo "====" && curl -u $USERPASS $HELM_REPOSITORY --upload-file $TGZ); done
             '''
